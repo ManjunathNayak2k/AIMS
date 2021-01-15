@@ -1,0 +1,10 @@
+width,height,left,top,label
+373,25,199,96,Company Name
+279,91,240,123,Company Address
+89,35,199,312,Invoice Number
+554,31,104,441,Start of Table
+556,31,105,474,End of Table
+103,30,544,506,Subtotal
+92,31,559,539,Tax
+175,47,469,598,Total
+5,5,5,5,No of Columns

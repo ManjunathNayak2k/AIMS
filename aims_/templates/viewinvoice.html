@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <div class="media">
+            {% if invoice.processed==True %}
+                <img class="view-invoice" src="{{ url_for('static', filename='bounding_boxes/' + invoice.image_file) }}">
+            {%else%}
+                <img class="view-invoice" src="{{ url_for('static', filename='invoices/' + invoice.image_file) }}">
+            {% endif %}
+            <div class = "invoice-body">
+                <h4>Invoice {{ invoice.id }}</h4>
+                <p class="text-secondary">{{invoice.image_file}}</p>
+                <h5>Status</h5>
+                <p class="text-shadow">Added by {{invoice.owner.username}}</p>
+                {% if invoice.broker_id == None %}
+                    <p class="text-danger">Unassigned</p>
+                {% else %}
+                    <p class="text-success">Assigned to Broker {{invoice.broker_id}}</p>
+                {% endif %}
+                {% if invoice.processed == False %}
+                <p class="text-danger">Not Processed</p>
+                {% else %}
+                <p class="text-success">Processed</p>
+                    {% if invoice.manual_processing==True %}
+                        <p class="text-warning">Manual Processing</p>
+                    {% endif %}
+                {% endif %}
+                {% if session['account_type']=='company'%}
+                    {% if invoice.processed==True and invoice.manual_processing == False %}
+                        <button type="button" class="btn btn-info btn-sm m-1" data-toggle="modal"data-target="#assignModal{{invoice.id}}">Manual Process</button>
+                    {% endif %}
+                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"data-target="#deleteModal{{invoice.id}}">Delete</button>
+                {% elif session['account_type']=='admin' %}
+                <a class="btn btn-primary btn-sm mt-1 mb-1" href="{{ url_for('assign_invoice', invoice_id=invoice.id) }}">Assign</a>
+                {% else %}
+                    {% if invoice.processed==True and invoice.manual_processing == True %}
+                        <a class="btn btn-primary btn-sm mt-1 mb-1" href="{{ url_for('processman', invoice_id=invoice.id) }}">Manual Process</a>
+                    {%elif invoice.processed==False%}
+                        <a class="btn btn-primary btn-sm mt-1 mb-1" href="{{ url_for('process_invoice', invoice_id=invoice.id) }}">Process</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal{{invoice.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Delete Invoice?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <form action="{{ url_for('delete_invoice', invoice_id=invoice.id) }}" method="POST">
+                            <input class="btn btn-danger" type="submit" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="assignModal{{invoice.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Manually Process Invoice?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <form action="{{ url_for('manually_process', invoice_id=invoice.id) }}" method="POST">
+                            <input class="btn btn-info" type="submit" value="Assign">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}

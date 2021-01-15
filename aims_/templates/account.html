@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+        <div class="content-section">
+            <div class="media">
+                <img class="account-img" src="{{ url_for('static', filename='profile_pics/' + userdetail.image_file) }}">
+                <div class="media-body">
+                    <h3>{{ userdetail.username }}</h3>
+                    <h4>Role : {{session['account_type']}}</h4>
+                    <p class="text-secondary">{{ userdetail.email }}</p>
+                    <p class="text-secondary">{{ userdetail.street }}  {{ userdetail.phone }}</p>
+                    {% for s in specs %}
+                        <h5 class="text-info"> {{s}} </h5>
+                    {% endfor %}
+                </div>
+            </div>
+{% endblock content %}

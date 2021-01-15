@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for prod in products %}
+    <div class="content-section">
+        <div class="media-body">
+            <h3>{{ prod[0].title() }}</h3>
+            <h4 class="text-primary">Quantity: {{prod[1]}}</h4>
+            <p class="text-secondary">Price: {{ prod[2] }}</p>
+            <a class="btn btn-primary btn-sm mt-1 mb-1" href="{{ url_for('update_product_quant',product_id=prod[3]) }}">Update Quantity</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal{{ prod[3] }}">Delete Product</button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal{{ prod[3] }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Product?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="{{ url_for('delete_product_quant',product_id=prod[3]) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Remove">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+    {% endfor %}
+    {{ pagination.info }}
+    {{ pagination.links }}
+{% endblock content %}

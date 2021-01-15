@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <img class="manprocess-invoice" src="{{ url_for('static', filename='invoices/' + invoice.image_file) }}">
+    <form method="POST" action="">
+        <!-- csrf token -->
+        {{ form.hidden_tag() }}
+
+        <fieldset class="form-group">
+            
+            <legend class="border-bottom mb-4">Manual Process</legend>
+
+            {% if "Company Name" in actlabels %}
+                <div class="form-group">
+                    {{ form.compname.label(class="form-control-label") }}
+
+                    {% if form.compname.errors %}
+                    {{ form.compname(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.compname.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.compname(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if "Company Address" in actlabels %}
+            <div class="form-group">
+                {{ form.compaddr.label(class="form-control-label") }}
+            
+                {% if form.compaddr.errors %}
+                {{ form.compaddr(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.compaddr.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.compaddr(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if "Invoice Number" in actlabels %}
+            <div class="form-group">
+                {{ form.invnum.label(class="form-control-label") }}
+            
+                {% if form.invnum.errors %}
+                {{ form.invnum(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.invnum.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.invnum(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if "Subtotal" in actlabels %}
+            <div class="form-group">
+                {{ form.subt.label(class="form-control-label") }}
+            
+                {% if form.subt.errors %}
+                {{ form.subt(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.subt.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.subt(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if "Discount" in actlabels %}
+            <div class="form-group">
+                {{ form.disc.label(class="form-control-label") }}
+            
+                {% if form.disc.errors %}
+                {{ form.disc(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.disc.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.disc(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if "Tax" in actlabels %}
+            <div class="form-group">
+                {{ form.tax.label(class="form-control-label") }}
+            
+                {% if form.tax.errors %}
+                {{ form.tax(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.tax.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.tax(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if "Total" in actlabels %}
+            <div class="form-group">
+                {{ form.total.label(class="form-control-label") }}
+            
+                {% if form.total.errors %}
+                {{ form.total(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.total.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.total(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}

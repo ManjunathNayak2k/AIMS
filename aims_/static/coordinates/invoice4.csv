@@ -1,0 +1,9 @@
+width,height,left,top,label
+108,22,121,5,Company Name
+159,36,98,21,Company Address
+286,18,33,131,Start of Table
+287,19,33,163,End of Table
+52,20,270,194,Subtotal
+48,18,274,211,Tax
+61,23,266,243,Total
+3,3,3,3,No of Columns

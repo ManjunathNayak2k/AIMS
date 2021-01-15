@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for user in users %}
+        {% if user!= current_user%}
+            <div class="media-body">
+                <h3><a class="article-title" href="{{ url_for('account', user_id=user.id) }}" >{{ user.username }}</a></h3>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock content %}

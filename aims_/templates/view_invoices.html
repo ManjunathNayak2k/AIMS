@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+		{% for invoice in image_files %}
+		<article class="media">
+			<div class="media-body">
+				<h2><a class="article-title" href="{{ url_for('view_invoice_by_id', invoice_id=invoice.id) }}">Invoice {{ invoice.id }}</a></h2>
+			</div>
+			<div class="media">
+				<img class="view-invoice" src="{{ url_for('static', filename='invoices/' + invoice.image_file) }}">
+			</div>
+		</article>
+		<div class="col-md-9 mu-5 mb-5"></div>
+		{% endfor %}
+		{{ pagination.info }}
+		{{ pagination.links }}
+{% endblock content %}

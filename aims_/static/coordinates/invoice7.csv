@@ -1,0 +1,10 @@
+width,height,left,top,label
+105,23,57,122,Company Name
+147,46,60,142,Company Address
+60,25,657,206,Invoice Number
+628,27,76,373,Start of Table
+624,29,79,443,End of Table
+61,21,649,488,Subtotal
+32,23,668,519,Tax
+78,39,624,550,Total
+4,4,4,4,No of Columns

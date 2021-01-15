@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+        {% for item in items %}
+        <div class="content-section">
+                <div class="media">
+                        <img class="view-invoice" src="{{ url_for('static', filename='invoices/' + item["invoice"].image_file) }}">
+                        <div class="invoice-body">
+                                <h3><a class="article-title"  href="{{ url_for('view_invoice_by_id', invoice_id=item["invoice_id"])}}">Invoice {{ item["invoice_id"] }}</a></h3>
+                                {% for key in item.keys() %}
+                                        {% if key=='Accuracy' %}
+                                                <h5 class="text-success">{{ key }} : {{ item[key] }}</h5>
+                                        {% elif key!='Items' and key!='invoice_id' and key!='invoice'%}
+                                                <p class="text-warning">{{ key }} : {{ item[key] }}</p>
+                                        {% elif key!='invoice_id' and key!='invoice'%}
+                                                <h4 class="text-primary">Products</h4>
+                                                {% for product in item[key] %}
+                                                        <p class="text-shadow">{{ product[0].title()}} - QTY: {{product[1]}}</p>
+                                                {% endfor %}
+                                        {% endif %}
+                                {% endfor %}
+                        </div>
+                </div>
+        </div>
+        <div class="col-md-4"></div>
+        {% endfor %}
+        {{ pagination.info }}
+        {{ pagination.links }}
+{% endblock content %}

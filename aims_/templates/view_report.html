@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+<!--Graph-->
+<div class='container'>
+    <canvas id="myChartrev" width="300" height="300"></canvas>
+    <canvas id="myChartinv" width="300" height="300"></canvas>
+    <canvas id="myChartbro" width="300" height="300"></canvas>
+</div>
+{% block javascript %}
+<script>
+
+    function getGraph(type,ref,label,labels,data,title_text){        
+        return new Chart(ref, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    borderWidth: 1,
+                    borderAlign:'center',
+                    borderColor: '#777',
+                    hoverBorderColor: '#F43',
+                    hoverBackgroundColor: '#FCB',
+                    hoverBorderWidth: 3,
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: title_text,
+                    fontSize: 40,
+                },
+                legend: {
+                    position: 'right',
+                    labels: {
+                        fontColor: '#040'
+                    }
+                },
+                layout: {
+                    padding: {
+                        right: 50,
+                    }
+                },
+                animation:{
+                    animateScale:true,
+                    cutoutPercentage:50,
+                }
+                
+            }
+        })
+    }
+    let myChartrev = document.getElementById('myChartrev').getContext('2d');
+    var compnames = JSON.parse({{ comp_names | tojson }})
+    var revenues = JSON.parse({{ revenues | tojson }})
+    let plotchartrev = getGraph('doughnut', myChartrev,'Revenue',compnames,revenues,'Revenue Generated')
+    var inv_data = JSON.parse({{ invdata | tojson }})
+    let myChartinv = document.getElementById('myChartinv').getContext('2d');
+    let plotchartinv = getGraph('doughnut', myChartinv, 'Process', ['Unprocessed','Processed','Manual Processing'], inv_data, 'Processing Analysis')
+    var bronames = JSON.parse({{ bronames | tojson }})
+    var assgn_invs = JSON.parse({{ assgn_invs | tojson }})
+    let myChartbro = document.getElementById('myChartbro').getContext('2d');
+    let plotchartbro = getGraph('doughnut', myChartbro, 'Brokers',bronames,assgn_invs, 'Broker Productivity')
+    
+</script>
+{% endblock %}
+{% endblock content %}
